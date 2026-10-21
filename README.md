@@ -18,24 +18,7 @@ A student accommodation website that helps students find rooms close to their in
 - CSS3 (Flexbox, Grid, media queries)
 - JavaScript (vanilla)
 
-## Project structure
 
-```
-getroom/
-├── home.html      # Landing page
-├── home.css       # Styles
-├── home.js        # Hamburger menu toggle
-└── coverhome.jpg  # Hero image (add your own)
-```
-
-## Getting started
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/<your-username>/getroom.git
-   ```
-2. Open the folder and make sure `coverhome.jpg` is in it.
-3. Open `home.html` in your browser, or serve it with XAMPP / Live Server.
 
 ## Roadmap
 
