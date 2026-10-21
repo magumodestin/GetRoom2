@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GetRoom - image link checker</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 20px; background: #f8fafc; }
+      h2 { margin: 22px 0 8px; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+      figure { margin: 0; background: #fff; border: 3px solid #cbd5e1; border-radius: 10px; overflow: hidden; }
+      figure.ok { border-color: #16a34a; }
+      figure.bad { border-color: #dc2626; }
+      img { width: 100%; height: 130px; object-fit: cover; display: block; background: #e2e8f0; }
+      figcaption { font-size: 11px; padding: 6px 8px; word-break: break-all; }
+      #summary { font-weight: bold; margin-top: 8px; }
+    </style>
+  </head>
+  <body>
+    <h1>Image link checker</h1>
+    <p>Green = loads. Red = broken: replace that ID in <b>room-images.js</b>.</p>
+    <p id="summary">Checking…</p>
+    <div id="out"></div>
+    <script src="room-images.js"></script>
+    <script>
+      const out = document.getElementById("out");
+      let ok = 0, bad = 0, total = 0;
+      const summary = document.getElementById("summary");
+      const update = () => (summary.textContent = `${ok} working, ${bad} broken, ${total - ok - bad} checking…`);
+      for (const [type, urls] of Object.entries(roomImages)) {
+        const h = document.createElement("h2");
+        h.textContent = `${type} (${urls.length})`;
+        const grid = document.createElement("div");
+        grid.className = "grid";
+        out.append(h, grid);
+        urls.forEach((url) => {
+          total++;
+          const fig = document.createElement("figure");
+          const img = document.createElement("img");
+          const cap = document.createElement("figcaption");
+          cap.textContent = url.split("photo-")[1].split("?")[0];
+          img.alt = "broken link";
+          img.onload = () => { fig.className = "ok"; ok++; update(); };
+          img.onerror = () => { fig.className = "bad"; bad++; update(); };
+          img.src = url;
+          fig.append(img, cap);
+          grid.append(fig);
+        });
+      }
+      update();
+    </script>
+  </body>
+</html>
